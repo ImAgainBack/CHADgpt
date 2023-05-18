@@ -5,7 +5,7 @@ from discord.ext import commands
 
 openai.api_key = 'pk-YukvrbGbWQszkmRTcKDDmQoCvcnTrAjPyUVmwzLsLJnsLQfK'
 openai.api_base = 'https://api.pawan.krd/v1'
-TOKEN = 'MTEwMzA2MDM1MDkzODY2MDk0NQ.G5xUET.s0jvzCsgHjLcRX6EyMM14QZMPEvWarc0-3LM2U'
+TOKEN = 'MTEwMzA2MDM1MDkzODY2MDk0NQ.GRklM7.cWINMJlU0DT-2frbPloYyCLpghgZpYlA5VPai0'
 
 conversation_history = {}  # Dictionary to store conversation history
 
@@ -15,9 +15,9 @@ def function_gpt(textes):
         prompt="Human: "f'{textes}' "\nAI:",
         temperature=0.7,
         max_tokens=750,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
+        top_p=0.7,
+        frequency_penalty=0.6,
+        presence_penalty=0.6,
         stop=["Human: ", "AI: "]
     )
     return response
@@ -59,12 +59,12 @@ async def a(ctx):
     # Store the current question in the conversation history
     history.append(user_message)
     conversation_history[ctx.author.id] = history
-
+    
     # Send the response back to the channel
     if yes_no.choices[0].text.strip().lower().startswith('yes'):
-        response = function_gpt(' \n'.join(str(item) for item in history) +'\nAll the things before this sentence are messages send you before by the user, this is made so you will be able to remember what the user told you and the next sentence is what the user wants you todo.\n' + user_message)
+        response = function_gpt(' \n'.join(str(item) for item in history) +'\nAll the things before this sentence are messages send you before by the user, this is made so you will be able to remember what the user told you and the next sentence is what the user wants you todo. You dont always need to remember what he said. Its just a memory that you may feel free to use.\n' + user_message)
         await ctx.send('```py\n' +response.choices[0].text.strip()+'\n```')
     else:
-        response = function_gpt(' \n'.join(str(item) for item in history) +'\nAll the things before this sentence are messages send you before by the user, this is made so you will be able to remember what the user told you and the next sentence is what the user wants you todo.\n' + user_message)
+        response = function_gpt(' \n'.join(str(item) for item in history) +'\nAll the things before this sentence are messages send you before by the user, this is made so you will be able to remember what the user told you and the next sentence is what the user wants you todo. You dont always need to remember what he said. Its just a memory that you may feel free to use.\n' + user_message)
         await ctx.send(response.choices[0].text.strip())
 client.run(TOKEN)
