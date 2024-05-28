@@ -3,9 +3,9 @@ import os
 import openai
 from discord.ext import commands
 
-openai.api_key = 'pk-YukvrbGbWQszkmRTcKDDmQoCvcnTrAjPyUVmwzLsLJnsLQfK'
+openai.api_key = ''
 openai.api_base = 'https://api.pawan.krd/v1'
-TOKEN = 'MTEwMzA2MDM1MDkzODY2MDk0NQ.GRklM7.cWINMJlU0DT-2frbPloYyCLpghgZpYlA5VPai0'
+TOKEN = ''
 
 conversation_history = {}  # Dictionary to store conversation history
 
